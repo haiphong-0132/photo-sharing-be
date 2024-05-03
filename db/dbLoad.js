@@ -22,21 +22,28 @@ async function dbLoad() {
   const userModels = models.userListModel();
   const mapFakeId2RealId = {};
   for (const user of userModels) {
-    userObj = new User(
-      user.first_name,
-      user.last_name,
-      user.location,
-      user.description,
-      user.occupation,
-    );
-    await userObj.save(function (err, result) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(result);
-      }
+    userObj = new User({
+      first: user.first_name,
+      last_name: user.last_name,
+      location: user.location,
+      description: user.description,
+      occupation: user.occupation,
     });
+    try {
+      await userObj.save();
+      mapFakeId2RealId[user._id] = userObj._id;
+      user.objectID = userObj._id;
+      console.log(
+        "Adding user:",
+        user.first_name + " " + user.last_name,
+        " with ID ",
+        user.objectID,
+      );
+    } catch (error) {
+      console.error("Error create user", error);
+    }
   }
+  mongoose.disconnect();
 }
 
 dbLoad();
