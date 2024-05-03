@@ -1,22 +1,11 @@
 const mongoose = require("mongoose");
 
-/**
- * Define the Mongoose Schema for a Comment.
- */
 const userSchema = new mongoose.Schema({
-  first_name: String,
-  last_name: String,
-  location: String,
-  description: String,
-  occupation: String,
+  first_name: { type: String },
+  last_name: { type: String },
+  location: { type: String },
+  description: { type: String },
+  occupation: { type: String },
 });
 
-/**
- * Create a Mongoose Model for a User using the userSchema.
- */
-const User = mongoose.model.Users || mongoose.model("Users", userSchema);
-
-/**
- * Make this available to our application.
- */
-module.exports = User;
+module.exports = mongoose.model.Users || mongoose.model("Users", userSchema);
