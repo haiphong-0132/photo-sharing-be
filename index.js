@@ -5,6 +5,7 @@ const dbConnect = require("./db/dbConnect");
 const UserRouter = require("./routes/UserRouter");
 const PhotoRouter = require("./routes/PhotoRouter");
 const CommentRouter = require("./routes/CommentRouter");
+const path = require("path");
 
 dbConnect();
 
@@ -12,6 +13,8 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/user", UserRouter);
 app.use("/api/photo", PhotoRouter);
+app.use("/api/comment", CommentRouter);
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.get("/", (request, response) => {
   response.send({ message: "Hello from photo-sharing app API!" });
